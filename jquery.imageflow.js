@@ -31,9 +31,6 @@
                 container.css("line-height", "0");
                 
                 _imageFlow(container, params);
-                
-                 // Re-flow when the container is resized.
-                 $(window).resize(function() {_imageFlow(container, params);});
             });
         }
     });

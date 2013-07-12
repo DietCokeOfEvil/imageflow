@@ -38,15 +38,21 @@
         <script type="text/javascript">
             // <!--
         $(document).ready(
-        function() {
-            // Hide the images until they've loaded.
-            $("img").css("display", "none");
-        }
+            function() {
+                // Hide the images until they've loaded.
+                $("img").css("display", "none");
+            }
         );
-            $(window).load(
-                function() { 
-                    $('.gallery').imageFlow({heightHintPx: 150});
-                });
+        
+        $(window).load(
+            function() { 
+                $('.gallery').imageFlow({heightHintPx: 150});
+            });
+            
+        // Re-flow when the container is resized.
+        $(window).resize(function() {
+            $('.gallery').imageFlow({heightHintPx: 150});
+        });
             // -->
         </script>
     </head>
