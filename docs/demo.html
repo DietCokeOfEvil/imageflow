@@ -38,7 +38,7 @@
         }
         </style>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-        <script type="text/javascript" src="jquery.imageflow.js"></script>
+        <script type="text/javascript" src="https://rawgithub.com/DietCokeOfEvil/justiflow/master/jquery.justiflow.js"></script>
         <script type="text/javascript">
             // <!--
         $(document).ready(
@@ -50,14 +50,14 @@
         
         $(window).load(
             function() { 
-                $('.gallery').imageFlow({heightHintPx: 150});
-                $('.gallery2').imageFlow({heightHintPx: 75});
+                $('.gallery').justiflow({heightHintPx: 150});
+                $('.gallery2').justiflow({heightHintPx: 75});
             });
             
         // Re-flow when the container is resized.
         $(window).resize(function() {
-            $('.gallery').imageFlow({heightHintPx: 150});
-            $('.gallery2').imageFlow({heightHintPx: 75});
+            $('.gallery').justiflow({heightHintPx: 150});
+            $('.gallery2').justiflow({heightHintPx: 75});
         });
             // -->
         </script>
