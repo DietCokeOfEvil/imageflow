@@ -26,12 +26,16 @@
                 color: white;
             }
             
-        img { margin: 2px; }
-            
-        .gallery {
-                border: solid white 1px;
-                padding: 2px;
-           }
+        .gallery img { margin: 2px; }
+        .gallery2 img { padding: 5px; border: solid white 3px; }
+        
+        .gallery2 {
+            margin-top: 2em;
+        }
+        
+        .gallery, gallery2 {
+            padding: 2px;
+        }
         </style>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         <script type="text/javascript" src="jquery.imageflow.js"></script>
@@ -47,11 +51,13 @@
         $(window).load(
             function() { 
                 $('.gallery').imageFlow({heightHintPx: 150});
+                $('.gallery2').imageFlow({heightHintPx: 75});
             });
             
         // Re-flow when the container is resized.
         $(window).resize(function() {
             $('.gallery').imageFlow({heightHintPx: 150});
+            $('.gallery2').imageFlow({heightHintPx: 75});
         });
             // -->
         </script>
@@ -72,6 +78,9 @@
             <img src="http://sethdavenport.com/rest/1/scaledImage.php?iid=81&w=500&h=500">
             <img src="http://sethdavenport.com/rest/1/scaledImage.php?iid=80&w=500&h=500">
             <img src="http://sethdavenport.com/rest/1/scaledImage.php?iid=76&w=500&h=500">
+        </div>
+        
+        <div class="gallery2">
             <img src="http://sethdavenport.com/rest/1/scaledImage.php?iid=93&w=500&h=500">
             <img src="http://sethdavenport.com/rest/1/scaledImage.php?iid=91&w=500&h=500">
             <img src="http://sethdavenport.com/rest/1/scaledImage.php?iid=90&w=500&h=500">
