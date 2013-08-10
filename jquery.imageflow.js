@@ -1,6 +1,7 @@
 /** 
- * JQuery plugin that flows images nicely inside a container.  
- * Scaling preserves aspect ratio.
+ * JQuery plugin that flows children nicely inside a container.  Child elements
+ * are converted to inline-block and scaled so the layout is justified on both
+ * edges.  Scaling preserves aspect ratio.
  * 
  * Author: Seth Davenport, http://www.sethdavenport.com
  *
@@ -9,9 +10,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
-
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
-
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,7 +21,7 @@
  */
 (function($) {
     $.fn.extend({
-        imageFlow: function(params) {
+        justiflow: function(params) {
             params = $.extend({ heightHintPx: 100 }, params);
             
             var container = $(this);
@@ -29,13 +30,17 @@
             container.css("white-space", "pre");
             container.css("line-height", "0");
 
-            var containedImages = container.children('img');
+            var tiles = container.children();
             var currentWidth = 0;
             var previousRowItems = new Array();
 
             // Work out what the container's 'natural' width would be.
             container.css("width", "auto");
             var rowWidth = container.width();
+            
+            // Constrain the container to the width we computed, so that
+            // the image adjustments below don't cause it to resize.
+            container.css("width", rowWidth);
 
             // Get rid of any text directly inside the image container, to 
             // prevent it from messing up the layout.
@@ -43,32 +48,44 @@
                 return this.nodeType === 3;
             }).remove();
 
-            containedImages.each(function() {
-                var image = $(this);
+            tiles.each(function() {
+                var tile = $(this);
+                
+                // Save the item's original aspect ratio for future 
+                // calculations.
+                if (!tile.data('jquery.imageflow.aspect-ratio')) {
+                    tile.data(
+                        'jquery.imageflow.aspect-ratio', 
+                        tile.width() / tile.height());
+                }
+                
+                // Do a preliminary scale using the heigh hint directly.  This
+                // is so I can estimate how many items to put in each row.
+                tile.css("display", "inline-block");
+                tile.css("height",  params.heightHintPx);
+                tile.css("width",   params.heightHintPx * tile.data('jquery.imageflow.aspect-ratio'));
 
-                // Decide how many images go in the current row using the height hint.
-                image.css("display", "inline-block");
-                image.css("width", "auto");
-                image.css("height", params.heightHintPx);
-
-                if (currentWidth + image.outerWidth(true) >= rowWidth) {
-                    // Once we have a complete row, scale it further such that it
-                    // occupies exactly the container's width.
-                    
+                // Once I have a complete row, scale it further such that it
+                // occupies exactly the container's width.
+                if (currentWidth + tile.outerWidth(true) >= rowWidth) {
                     var percent = rowWidth / currentWidth;
                     var adjustedRowWidth = 0;
 
                     var outerheight = previousRowItems[0].outerHeight(true);
-                    var adjustedOuterHeight = Math.round(outerheight * percent);
+                    var adjustedOuterHeight = outerheight * percent;
 
                     // Compensate for margins, border size, padding on the images.
                     var yBoxPadding = outerheight - previousRowItems[0].height();
-
-                    for (j=0; j<previousRowItems.length-1; ++j) {
-                        var item = previousRowItems[j];
-                        item.css("width", "auto");
-                        item.css("height", adjustedOuterHeight - yBoxPadding);
-                        adjustedRowWidth += item.outerWidth(true);
+                    
+                    if (previousRowItems.length > 0) {
+                        for (j=0; j<previousRowItems.length-1; ++j) {
+                            var item = previousRowItems[j];
+                            var newHeight = adjustedOuterHeight - yBoxPadding;
+                            
+                            item.css("height", newHeight);
+                            item.css("width", newHeight * item.data('jquery.imageflow.aspect-ratio'));
+                            adjustedRowWidth += item.outerWidth(true);
+                        }    
                     }
 
                     // Make sure the last image in the row accounts for any
@@ -77,23 +94,19 @@
                     var xBoxPadding = lastItem.outerWidth(true) - lastItem.width();
 
                     // Compensate for margins, border size, padding on the images.
-                    lastItem.css("height", adjustedOuterHeight - xBoxPadding);
+                    lastItem.css("height", adjustedOuterHeight - yBoxPadding);
                     lastItem.css("width", rowWidth - adjustedRowWidth - xBoxPadding);
                     
-                    image.before("\n");
+                    tile.before("\n");
                     currentWidth = 0;
                     previousRowItems = new Array();
                 }
 
-                currentWidth += image.outerWidth(true);
+                currentWidth += tile.outerWidth(true);
         
-                previousRowItems.push(image);
+                previousRowItems.push(tile);
             });
-    
-            // Constrain the container to the width we computed, so that
-            // the image adjustments below don't cause it to resize.
-            container.css("width", rowWidth);
-            
+
             return $(this);
         }
     });
