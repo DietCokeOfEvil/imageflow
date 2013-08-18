@@ -33,3 +33,9 @@ Justiflow makes it nice:
             });
         
 ![Nice](/docs/nice.png)
+
+Justiflow can handle borders, padding, margins, etc:
+
+![Nice](/docs/fancy.png)
+
+    
