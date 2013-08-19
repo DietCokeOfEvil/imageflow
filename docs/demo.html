@@ -19,23 +19,22 @@
         <title>ImageFlow Demo</title>
         <meta charset="utf-8">
         <style type="text/css">
-            body { 
-                padding-left: 20%; 
-                padding-right: 20%;
-                background: black;
-                color: white;
-            }
-            
-        .gallery img { margin: 2px; }
-        .gallery2 img { padding: 5px; border: solid white 3px; }
+	div.flow {
+		border: dashed red 1px; 
+		background: #EEE; 
+		width: 600px; 
+		padding: 5px;
+	}
+       
+        div img {
+		margin: 2px;
+		border-radius: 5px;
+		border: solid black 2px;
+		padding: 3px;
+		background: white;
+		box-shadow: 2px 2px 3px gray;
+	}
         
-        .gallery2 {
-            margin-top: 2em;
-        }
-        
-        .gallery, gallery2 {
-            padding: 2px;
-        }
         </style>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         <script type="text/javascript" src="https://rawgithub.com/DietCokeOfEvil/justiflow/master/jquery.justiflow.js"></script>
@@ -50,14 +49,12 @@
         
         $(window).load(
             function() { 
-                $('.gallery').justiflow({heightHintPx: 150});
-                $('.gallery2').justiflow({heightHintPx: 75});
+               $('div.flow').justiflow({heightHintPx: 100});
             });
             
         // Re-flow when the container is resized.
         $(window).resize(function() {
-            $('.gallery').justiflow({heightHintPx: 150});
-            $('.gallery2').justiflow({heightHintPx: 75});
+            $('div.flow').justiflow({heightHintPx: 100});
         });
             // -->
         </script>
@@ -67,30 +64,19 @@
         
         <p>Resize the browser window to see the images reflow dynamically.</p>
         
-        <div class="gallery">
-            <img src="http://sethdavenport.com/rest/1/scaledImage.php?iid=93&w=500&h=500">
-            <img src="http://sethdavenport.com/rest/1/scaledImage.php?iid=91&w=500&h=500">
-            <img src="http://sethdavenport.com/rest/1/scaledImage.php?iid=90&w=500&h=500">
-            <img src="http://sethdavenport.com/rest/1/scaledImage.php?iid=89&w=500&h=500">
-            <img src="http://sethdavenport.com/rest/1/scaledImage.php?iid=88&w=500&h=500">
-            <img src="http://sethdavenport.com/rest/1/scaledImage.php?iid=87&w=500&h=500">
-            <img src="http://sethdavenport.com/rest/1/scaledImage.php?iid=84&w=500&h=500">
-            <img src="http://sethdavenport.com/rest/1/scaledImage.php?iid=81&w=500&h=500">
-            <img src="http://sethdavenport.com/rest/1/scaledImage.php?iid=80&w=500&h=500">
-            <img src="http://sethdavenport.com/rest/1/scaledImage.php?iid=76&w=500&h=500">
-        </div>
-        
-        <div class="gallery2">
-            <img src="http://sethdavenport.com/rest/1/scaledImage.php?iid=93&w=500&h=500">
-            <img src="http://sethdavenport.com/rest/1/scaledImage.php?iid=91&w=500&h=500">
-            <img src="http://sethdavenport.com/rest/1/scaledImage.php?iid=90&w=500&h=500">
-            <img src="http://sethdavenport.com/rest/1/scaledImage.php?iid=89&w=500&h=500">
-            <img src="http://sethdavenport.com/rest/1/scaledImage.php?iid=88&w=500&h=500">
-            <img src="http://sethdavenport.com/rest/1/scaledImage.php?iid=87&w=500&h=500">
-            <img src="http://sethdavenport.com/rest/1/scaledImage.php?iid=84&w=500&h=500">
-            <img src="http://sethdavenport.com/rest/1/scaledImage.php?iid=81&w=500&h=500">
-            <img src="http://sethdavenport.com/rest/1/scaledImage.php?iid=80&w=500&h=500">
-            <img src="http://sethdavenport.com/rest/1/scaledImage.php?iid=76&w=500&h=500">
-        </div>
+	<div class="flow">
+	    <img src="pics/1.jpg">
+	    <img src="pics/2.jpg">
+	    <img src="pics/3.jpg">
+	    <img src="pics/4.jpg">
+	    <img src="pics/5.jpg">
+	    <img src="pics/6.jpg">
+	    <img src="pics/7.jpg">
+	    <img src="pics/1.jpg">
+	    <img src="pics/2.jpg">
+	    <img src="pics/3.jpg">
+	    <img src="pics/4.jpg">
+	</div>
+
     </body>
 </html>
