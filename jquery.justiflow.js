@@ -1,8 +1,8 @@
-/** 
+/**
  * JQuery plugin that flows children nicely inside a container.  Child elements
  * are converted to inline-block and scaled so the layout is justified on both
  * edges.  Scaling preserves aspect ratio.
- * 
+ *
  * Author: Seth Davenport, http://www.sethdavenport.com
  *
  *  Copyright 2013 Seth Davenport
@@ -23,7 +23,7 @@
     $.fn.extend({
         justiflow: function(params) {
             params = $.extend({ heightHintPx: 100 }, params);
-            
+
             var container = $(this);
 
             // The point of this plugin is to do the wrapping manually.
@@ -37,12 +37,12 @@
             // Work out what the container's 'natural' width would be.
             container.css("width", "auto");
             var rowWidth = container.width();
-            
+
             // Constrain the container to the width we computed, so that
             // the image adjustments below don't cause it to resize.
             container.css("width", rowWidth);
 
-            // Get rid of any text directly inside the image container, to 
+            // Get rid of any text directly inside the image container, to
             // prevent it from messing up the layout.
             container.contents().filter(function(){
                 return this.nodeType === 3;
@@ -50,15 +50,15 @@
 
             tiles.each(function() {
                 var tile = $(this);
-                
-                // Save the item's original aspect ratio for future 
+
+                // Save the item's original aspect ratio for future
                 // calculations.
                 if (!tile.data('jquery.imageflow.aspect-ratio')) {
                     tile.data(
-                        'jquery.imageflow.aspect-ratio', 
+                        'jquery.imageflow.aspect-ratio',
                         tile.width() / tile.height());
                 }
-                
+
                 // Do a preliminary scale using the heigh hint directly.  This
                 // is so I can estimate how many items to put in each row.
                 tile.css("display", "inline-block");
@@ -76,16 +76,16 @@
 
                     // Compensate for margins, border size, padding on the images.
                     var yBoxPadding = outerheight - previousRowItems[0].height();
-                    
+
                     if (previousRowItems.length > 0) {
-                        for (j=0; j<previousRowItems.length-1; ++j) {
+                        for (var j=0; j<previousRowItems.length-1; ++j) {
                             var item = previousRowItems[j];
                             var newHeight = adjustedOuterHeight - yBoxPadding;
-                            
+
                             item.css("height", newHeight);
                             item.css("width", newHeight * item.data('jquery.imageflow.aspect-ratio'));
                             adjustedRowWidth += item.outerWidth(true);
-                        }    
+                        }
                     }
 
                     // Make sure the last image in the row accounts for any
@@ -96,14 +96,14 @@
                     // Compensate for margins, border size, padding on the images.
                     lastItem.css("height", adjustedOuterHeight - yBoxPadding);
                     lastItem.css("width", rowWidth - adjustedRowWidth - xBoxPadding);
-                    
+
                     tile.before("\n");
                     currentWidth = 0;
                     previousRowItems = new Array();
                 }
 
                 currentWidth += tile.outerWidth(true);
-        
+
                 previousRowItems.push(tile);
             });
 
