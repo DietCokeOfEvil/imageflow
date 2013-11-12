@@ -32,7 +32,7 @@
 
             var tiles = container.children();
             var currentWidth = 0;
-            var previousRowItems = new Array();
+            var previousRowItems = [];
 
             // Work out what the container's 'natural' width would be.
             container.css("width", "auto");
@@ -99,7 +99,7 @@
 
                     tile.before("\n");
                     currentWidth = 0;
-                    previousRowItems = new Array();
+                    previousRowItems = [];
                 }
 
                 currentWidth += tile.outerWidth(true);
