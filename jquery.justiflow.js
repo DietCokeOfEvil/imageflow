@@ -20,6 +20,8 @@
  * limitations under the License.
  */
 (function($) {
+    "use strict";
+    
     $.fn.extend({
         justiflow: function(params) {
             params = $.extend({ heightHintPx: 100 }, params);
